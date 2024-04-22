@@ -1,6 +1,5 @@
 import datetime
 import pytz
-import locale
 
 def format_number_to_CLP(number):
     number_str = str(number)
@@ -21,7 +20,7 @@ def calculate_traded_money(entries):
             sells += float(entry[1]) * float(entry[2])
 
     traded_money = buys + sells
-    return round(traded_money, 2)
+    return format_number_to_CLP(round(traded_money, 2))
 
 def convert_to_milliseconds(start_year, start_month, start_day, start_hour, start_minute, end_year, end_month, end_day, end_hour, end_minute, timezone_str):
 
@@ -42,6 +41,22 @@ def convert_to_milliseconds(start_year, start_month, start_day, start_hour, star
     timestamp_end_milliseconds = timestamp_end_seconds * 1000
 
     return timestamp_start_milliseconds, timestamp_end_milliseconds
+
+
+
+def calculate_percentage_increase(current_year_entries, last_year_entries):
+    # Calcular dinero transado en CLP para cada día (en la hora del evento)
+    current_day_money_transacted = sum(float(trade[1]) * float(trade[2]) for trade in current_year_entries)
+    last_year_day_money_transacted = sum(float(trade[1]) * float(trade[2]) for trade in last_year_entries)
+
+    # Calcular aumento porcentual
+    percentage_increase = ((current_day_money_transacted - last_year_day_money_transacted) / last_year_day_money_transacted) * 100
+    percentage_increase_truncated = round(percentage_increase, 2)
+
+    return percentage_increase_truncated
+
+   
+
 
 
 
