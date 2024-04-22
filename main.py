@@ -1,5 +1,5 @@
 from api import get_trades
-from utils import calculate_traded_money, convert_to_milliseconds, calculate_percentage_increase
+from utils import calculate_traded_money, convert_to_milliseconds, calculate_percentage_increase, calculate_lost_profit, format_number_to_CLP
 
 
 # Obtener trades del evento "Black Buda" BTC-CLP
@@ -21,8 +21,16 @@ entries = get_trades(market, timestamp, limit)
 
 
 # ¿Cuánto dinero (en CLP) se transó durante el evento "Black Buda" BTC-CLP ? (truncar en 2 decimales)
+traded_money = calculate_traded_money(entries)
+print(f"Dinero transado durante el evento 'Black Buda' BTC-CLP: {format_number_to_CLP(traded_money)} CLP")
 
-print(f"Dinero transado durante el evento 'Black Buda' BTC-CLP: {calculate_traded_money(entries)} CLP")
+# Considerando que la comisión normal corresponde a un 0.8% ¿Cuánto dinero (en CLP) se dejó de ganar debido a la liberación de comisiones durante el BlackBuda? (truncar en 2 decimales)
+
+lost_profit = calculate_lost_profit(traded_money)
+print(f"Dinero perdido debido a la liberación de comisiones durante el BlackBuda: {lost_profit} CLP")
+
+
+
 
 
 # Obtener trades del evento "Black Buda" BTC-CLP del año anterior
@@ -41,3 +49,5 @@ last_year_entries = get_trades(market, timestamp_last_year, limit)
 percentage_increase = calculate_percentage_increase(current_year_entries, last_year_entries)
 
 print(f"Aumento porcentual en el volumen de transacciones respecto al mismo día del año anterior en la hora del evento: {percentage_increase}%")
+
+

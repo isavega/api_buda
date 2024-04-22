@@ -20,7 +20,7 @@ def calculate_traded_money(entries):
             sells += float(entry[1]) * float(entry[2])
 
     traded_money = buys + sells
-    return format_number_to_CLP(round(traded_money, 2))
+    return round(traded_money, 2)
 
 def convert_to_milliseconds(start_year, start_month, start_day, start_hour, start_minute, end_year, end_month, end_day, end_hour, end_minute, timezone_str):
 
@@ -55,7 +55,13 @@ def calculate_percentage_increase(current_year_entries, last_year_entries):
 
     return percentage_increase_truncated
 
-   
+def calculate_lost_profit(traded_money):
+    commission_rate = 0.008  # 0.8% expressed as a decimal
+    lost_profit = traded_money * commission_rate
+    return format_number_to_CLP(round(lost_profit, 2))
+
+
+
 
 
 

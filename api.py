@@ -39,8 +39,7 @@ def get_trades(market_id, timestamp, limit):
         current_timestamp = int(data["trades"]["last_timestamp"])
         entries = data["trades"]["entries"]
         while current_timestamp < timestamp:
-            print("ENTRO AL WHILE")
-            response = requests.get(f"{URL_BASE}/markets/{market_id}/trades", params={"timestamp": timestamp, "limit": limit})
+            response = requests.get(f"{URL_BASE}/markets/{market_id}/trades", params={"timestamp": current_timestamp, "limit": limit})
             data = response.json()
             current_timestamp = int(data["trades"]["last_timestamp"])
             entries += data["trades"]["entries"]
